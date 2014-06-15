@@ -12,10 +12,9 @@ This is a Perl module and program giving easy access to [FreeMobile](http://mobi
 You need a [FreeMobile](http://mobile.free.fr/) SMS API key. 
 
 You can get your [FreeMobile](http://mobile.free.fr/) SMS API key from your account `https://mobile.free.fr/moncompte/`.
+Then go to '**Gérer Mon Compte / Mes Options**'.
+And then '**Notification par SMS**'.
 
-Then go to 'Gérer Mon Compte / Mes Options'.
-
-And then 'Notification par SMS'.
 
 You also need this Perl modules:
 
