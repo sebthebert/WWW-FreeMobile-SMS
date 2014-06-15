@@ -3,15 +3,15 @@ WWW-FreeMobile-SMS
 
 # About
 
-This is a Perl module and program giving easy access to FreeMobile SMS API from Perl.
+This is a Perl module and program giving easy access to [FreeMobile](http://mobile.free.fr/) SMS API from Perl.
 
 # Installation
 
 ## Requirements
 
-You need a FreeMobile SMS API key. 
+You need a [FreeMobile](http://mobile.free.fr/) SMS API key. 
 
-You can get your FreeMobile SMS API key from your account `https://mobile.free.fr/moncompte/`.
+You can get your [FreeMobile](http://mobile.free.fr/) SMS API key from your account `https://mobile.free.fr/moncompte/`.
 
 Then go to 'Gérer Mon Compte / Mes Options'.
 
