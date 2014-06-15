@@ -1,0 +1,134 @@
+#!/usr/bin/perl
+
+=head1 NAME
+
+freemobile-sms - Program giving easy access to FreeMobile SMS API
+
+=head1 DESCRIPTION
+
+Program giving easy access to FreeMobile SMS API
+
+=head1 SYNOPSIS
+
+    freemobile-sms --msg 'This is a msg send by freemobile-sms'
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-D>, B<--debug>
+
+Sets debug mode
+
+=item B<-h>, B<--help>
+
+Prints this Help
+
+=item B<-v>, B<--version>    
+
+Prints WWW::FreeMobile::SMS version
+
+=item B<-x>, B<--proxy>
+
+Sets proxy (with something like 'http://<proxy_url>:<pory_port>')
+
+=back
+
+=cut
+
+use strict;
+use warnings;
+
+use FindBin;
+use Getopt::Long qw(:config no_ignore_case);
+use JSON;
+use Pod::Usage;
+
+use lib "$FindBin::Bin/../lib/";
+
+use WWW::FreeMobile::SMS;
+
+my $FILE_CONFIG = "$FindBin::Bin/../conf/freemobile-sms.json";
+
+my %opt = ();
+
+=head1 SUBROUTINES/METHODS
+
+=head2 DEBUG
+
+Prints Debug message when debug mode is enabled (with -D/--debug)
+
+=cut
+
+sub DEBUG
+{
+    my $line = shift;
+
+    printf "[DEBUG] %s\n", $line if ($opt{debug});
+
+    return ($line);
+}
+
+=head2 Read_File_Config($file_config)
+
+Reads configuration file
+
+=cut
+
+sub Read_Config_File
+{
+    my $file_config = shift;
+
+    $file_config ||= $FILE_CONFIG;
+    if (-r $file_config)
+    {
+        DEBUG("Read_Config_File('$file_config')");
+        my $json = read_file($file_config);
+        return (JSON->new->decode($json));
+    }
+
+    return (undef);
+}
+
+#
+# MAIN
+#
+
+my $status = GetOptions(
+    \%opt,
+    'config|c=s',      # to change configuration file
+    'debug|D',         # to set debug mode
+    'help|h',          # to print help
+    'msg|m=s',         # for SMS message to send
+    'password|p=s',    # for 'FreeMobile SMS API password'
+    'proxy|x=s',       # to set proxy
+    'user|u=s',        # for 'FreeMobile SMS API user'
+    'version|v',       # to print version
+);
+
+pod2usage(0) if ((!$status) || ($opt{help}));
+
+if ($opt{version})
+{
+    printf "WWW::FreeMobile::SMS v%s\n", WWW::FreeMobile::SMS::version();
+    exit 0;
+}
+
+my $conf = Read_Config_File($opt{config});
+
+my $sms = WWW::FreeMobile::SMS->new(
+    {
+        user     => $opt{user} || $conf->{user},
+        password => $opt{password} || $conf->{password},
+        proxy    => $opt{proxy} || $conf->{proxy},
+        debug    => $opt{debug}
+    }
+);
+
+$sms->send($opt{msg});
+
+=head1 AUTHOR
+
+Sebastien Thebert <www-freemobile-sms@onetool.pm>
+
+=cut
