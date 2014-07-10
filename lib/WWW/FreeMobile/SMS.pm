@@ -33,7 +33,7 @@ $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 
 =head2 new($params)
 
-Creates a new instance of PushBullet API
+Creates a new instance of WWW::FreeMobile::SMS
 
     my $sms = WWW::FreeMobile::SMS->new({user => $user, password => $password});
 
@@ -63,6 +63,8 @@ sub new
 }
 
 =head2 send($msg)
+
+Sends SMS '$msg'
 
 =cut
 
